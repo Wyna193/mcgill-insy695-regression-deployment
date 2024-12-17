@@ -64,6 +64,8 @@ Ensure that you include a `requirements.txt` file listing all dependencies for t
 - `joblib`
 - `scikit-learn`
 - `numpy`
+- `requests`
+- `os`
 
 ### Conclusion:
 This project aims to provide a user-friendly interface for making sickness duration predictions based on test results. By deploying the model as a web service, healthcare professionals can easily input medical data and receive predictions for clinical decision-making.

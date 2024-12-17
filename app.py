@@ -1,9 +1,29 @@
 import streamlit as st
 import joblib
 import numpy as np
+import requests
+import os
 
+model_url = 'https://github.com/Wyna193/mcgill-insy695-regression-deployment/blob/main/random_forest_model.pkl'
 
-model = joblib.load('random_forest_model.pkl')
+model_path = 'random_forest_model.pkl'
+
+def download_model():
+    response = requests.get(model_url)
+    if response.status_code == 200:
+        with open(model_path, 'wb') as f:
+            f.write(response.content)
+        st.success("Model downloaded successfully.")
+    else:
+        st.error(f"Failed to download the model. Status code: {response.status_code}")
+
+@st.cache_resource
+def load_model():
+    if not os.path.exists(model_path):
+        download_model()
+    return joblib.load(model_path)
+
+model = load_model()
 
 def make_prediction(inputs):
     input_data = np.array(inputs).reshape(1, -1)
